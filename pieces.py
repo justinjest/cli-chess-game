@@ -10,3 +10,8 @@ class Pawn(Piece):
     def __init__(self, x, y, white):
         super().__init__(white, x, y)
         self.symbol = "p"
+
+class Rook(Piece):
+    def __init__(self, x, y, white):
+        super().__init__(white, x, y)
+        self.symbol = "r"
