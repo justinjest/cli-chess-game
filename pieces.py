@@ -15,3 +15,23 @@ class Rook(Piece):
     def __init__(self, x, y, white):
         super().__init__(white, x, y)
         self.symbol = "r"
+
+class Knight(Piece):
+    def __init__(self, x, y, white):
+        super().__init__(white, x, y)
+        self.symbol = "n"
+
+class Bishop(Piece):
+    def __init__(self, x, y, white):
+        super().__init__(white, x, y)
+        self.symbol = "b"
+
+class Queen(Piece):
+    def __init__(self, x, y, white):
+        super().__init__(white, x, y)
+        self.symbol = "q"
+
+class King(Piece):
+    def __init__(self, x, y, white):
+        super().__init__(white, x, y)
+        self.symbol = "k"

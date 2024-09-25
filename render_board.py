@@ -26,7 +26,6 @@ def draw_board(board):
         print ("")
 
 def draw_square(x, y, board):
-    piece = "_"
     piece_symbols = ["p",
               "b",
               "n",
@@ -34,11 +33,16 @@ def draw_square(x, y, board):
               "q",
               "k"]
     tmp = board[f"{name_column(x)}{y+1}"] 
-    if isinstance(tmp, Piece):
-        piece = tmp.symbol
+    piece = draw_piece(tmp)
     if x < 7:
         print (f"|{piece}", end = "")
     if x == 7:
         print(f"|{piece}|", end = "")
         
 
+def draw_piece(piece):
+    if isinstance(piece, Piece):
+        if piece.white:
+            return f'\033[0;30;47m{piece.symbol}\033[0;0m'
+        return piece.symbol
+    return "_"
