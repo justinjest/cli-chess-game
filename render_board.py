@@ -1,9 +1,4 @@
-def create_board():
-    board = {}
-    for y in range (7, -1, -1):
-        for x in range (0, 8):
-            board[f"{name_column(x)}{y + 1}"] = ""
-    return (board)
+from pieces import *
 
 
 def name_column(col_num):
@@ -32,16 +27,18 @@ def draw_board(board):
 
 def draw_square(x, y, board):
     piece = "_"
-    pieces = ["p",
+    piece_symbols = ["p",
               "b",
               "n",
               "r",
               "q",
               "k"]
-    tmp = board[f"{name_column(x)}{y+1}"]
-    if tmp in pieces:
-        piece = tmp
+    tmp = board[f"{name_column(x)}{y+1}"] 
+    if isinstance(tmp, Piece):
+        piece = tmp.symbol
     if x < 7:
         print (f"|{piece}", end = "")
     if x == 7:
         print(f"|{piece}|", end = "")
+        
+
