@@ -61,11 +61,12 @@ class King(Piece):
         self.symbol = "k"
     def is_move_valid(self, board):
         valid_moves = []
-        for i in range (-1,1):
-            for j in range (-1,1):
+        for i in range (-1,2):
+            for j in range (-1,2):
                 check_x = self.x - i
                 check_y = self.y - j
-                if check_x in range (0,7) and check_y in range(0,7):
+                print (f"({check_x},{check_y})")
+                if check_x in range (0,8) and check_y in range(0,8):
                     if board[(check_x, check_y)] == '':
                         valid_moves.append((check_x, check_y))
         print (valid_moves, self.symbol)
