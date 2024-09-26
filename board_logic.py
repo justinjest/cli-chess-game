@@ -8,6 +8,7 @@ def create_board():
     board = {}
     for y in range (7, -1, -1):
         for x in range (0, 8):
+            # Refactor this into a tuple, it will make the piece logic much simpler
             board[f"{name_column(x)}{y + 1}"] = ""
     return (board)
 
@@ -45,12 +46,14 @@ def place_queens(board, x, y, white=True):
     new_queen = Queen(x, y, white)
     new_board[board_location] = new_queen
     return new_board
+
 def place_kings(board, x, y, white=True):
     new_board = board
     board_location = f"{name_column(x)}{y + 1}"
     new_king = King(x, y, white)
     new_board[board_location] = new_king
     return new_board
+
 def generate_starting_board(board):
     # Place pawns
     for i in range(0, 8):

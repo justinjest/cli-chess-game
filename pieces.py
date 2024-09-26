@@ -10,6 +10,10 @@ class Pawn(Piece):
     def __init__(self, x, y, white):
         super().__init__(white, x, y)
         self.symbol = "p"
+    # returns True if move is valid, false otherwise
+    def is_move_valid(self, location):
+        True
+        # TODO: Implement this for all pieces
 
 class Rook(Piece):
     def __init__(self, x, y, white):
