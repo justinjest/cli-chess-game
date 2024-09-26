@@ -4,9 +4,9 @@ from player import Player
 from turn import *
 
 def main():
-    board = generate_board_no_pawns(create_board())
+    board = generate_board_mate(create_board())
     draw_board(board)
-    game_loop_2_turns(board)
+    game_loop(board)
 
 # This is here for before I created checkmate conditions
 def game_loop_2_turns(board):
@@ -20,7 +20,26 @@ def game_loop_2_turns(board):
         draw_board(board)
         if not player.white:
             game_over = True
-        player.white = not player.white 
+        player.white = not player.white
+
+
+def game_loop(board):
+    game_over = False
+    player = Player(True)
+    player_code = {False: "black",
+              True: "white"}
+    while game_over == False:
+        print (f"It is {player_code[player.white]}'s turn!")
+        board = turn(board)
+        draw_board(board)
+        for square in board.values():
+            if square != "":
+                if square.symbol == "k":
+                    if square.is_move_valid(board) == []:
+                        game_over = True
+                        break
+        player.white = not player.white
+    print (f"Game over! {player_code[not player.white]} won")
 
 # This is placeholder to generate options in the future (Like connecting online)
 def startup_message():
