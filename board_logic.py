@@ -79,6 +79,3 @@ def generate_starting_board(board):
 
     return board
 
-blank_board = create_board()
-board = generate_starting_board(blank_board)
-draw_board(board)
