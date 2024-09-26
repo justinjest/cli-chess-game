@@ -12,6 +12,8 @@ class Pawn(Piece):
         self.symbol = "p"
     # returns a list of valid moves
     def is_move_valid(self, board):
+        # TODO: add capture logic
+        # TODO: add en passant (HOW)
         valid_moves = []
         if self.white == True:
             if self.y == 1:
@@ -35,9 +37,27 @@ class Pawn(Piece):
         # TODO: Implement this for all pieces
 
 class Rook(Piece):
-     def __init__(self, x_y_pair, white):
+    def __init__(self, x_y_pair, white):
         super().__init__(white, x_y_pair[0], x_y_pair[1]) 
         self.symbol = "r"
+    def is_move_valid(self, board):
+        # TODO: Glitch in this where it does not render on screen when first attempt at move fails
+        # TODO: add capture logic
+        valid_moves = []
+        for i in range (-7,9):
+            check_x = self.x - i
+            print (f"({check_x},{self.y})")
+            if check_x in range (0,8):
+                if board[(check_x, self.y)] == '':
+                    valid_moves.append((check_x, self.y))
+        for j in range (-7, 9):
+            check_y = self.y - j
+            print (f"({self.x},{check_y})")
+            if check_y in range (0,8):
+                if board[(self.x, check_y)] == '':
+                    valid_moves.append((self.x, check_y))
+        print (valid_moves, self.symbol)
+        return valid_moves
     
 
 class Knight(Piece):     
@@ -60,6 +80,8 @@ class King(Piece):
         super().__init__(white, x_y_pair[0], x_y_pair[1])
         self.symbol = "k"
     def is_move_valid(self, board):
+        # TODO: add capture logic
+        # TODO: prevent moving into check
         valid_moves = []
         for i in range (-1,2):
             for j in range (-1,2):
