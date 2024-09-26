@@ -5,6 +5,8 @@
 # We then reender the next board
 import re
 
+# TODO: convert move into something akin to chess notation (r E7) etc
+
 def turn(board):
     new_board = board
     move = move_validation(new_board)
@@ -18,11 +20,19 @@ def move_validation(board):
     starting_pos = (int(move[1]),int(move[3]))
     ending_pos = (int(move[6]),int(move[8]))
     if board[starting_pos] != "":
-        print ("valid move")
-        return(starting_pos,ending_pos)
+        ending_move = piece_validation(ending_pos, board[starting_pos], board)
+        return(starting_pos,ending_move)
     else:
         print("no piece there! Try again")
         return move_validation(board)
+    
+def piece_validation(dest, piece, board):
+    if dest in piece.is_move_valid(board):
+        return (dest)
+    else:
+        print ("Sorry! Can't make that move")
+        return move_validation(board)
+        
 
 def input_validation():
     move = input("Please enter your move in the form of (a,b)(x,y) ")

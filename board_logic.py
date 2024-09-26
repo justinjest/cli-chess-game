@@ -79,3 +79,26 @@ def generate_starting_board(board):
 
     return board
 
+def generate_board_no_pawns(board):
+    
+    board = place_rooks(board, 0, 0, True)
+    board = place_rooks(board, 7, 0, True)
+    board = place_rooks(board, 0, 7, False)
+    board = place_rooks(board, 7, 7, False)
+
+    board = place_knights(board, 1, 0, True)
+    board = place_knights(board, 6, 0, True)
+    board = place_knights(board, 1, 7, False)
+    board = place_knights(board, 6, 7, False)   
+
+    board = place_bishops(board, 2, 0, True)
+    board = place_bishops(board, 5, 0, True)
+    board = place_bishops(board, 2, 7, False)
+    board = place_bishops(board, 5, 7, False)   
+    
+    board = place_queens(board, 3, 0, True)
+    board = place_queens(board, 3, 7, False)
+    board = place_kings(board, 4, 0, True)
+    board = place_kings(board, 4, 7, False)
+
+    return board

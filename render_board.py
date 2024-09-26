@@ -1,5 +1,9 @@
 from pieces import *
 
+# TODO: render numbers and letters around edge of board
+# TODO: update screen instead of redraw it
+
+
 
 def name_column(col_num):
     replacement = {
