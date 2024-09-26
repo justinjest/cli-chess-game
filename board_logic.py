@@ -9,50 +9,45 @@ def create_board():
     for y in range (7, -1, -1):
         for x in range (0, 8):
             # Refactor this into a tuple, it will make the piece logic much simpler
-            board[f"{name_column(x)}{y + 1}"] = ""
+            board[(x,y)] = ""
     return (board)
 
 def place_pawns(board, x, y, white=True):
     new_board = board
-    board_location = f"{name_column(x)}{y + 1}"
-    new_pawn = Pawn (x, y, white)
-    new_board[board_location] = new_pawn
+    new_pawn = Pawn ((x,y), white)
+    new_board[(x,y)] = new_pawn
     return new_board
 
 def place_rooks(board, x, y, white=True):
     new_board = board
-    board_location = f"{name_column(x)}{y + 1}"
-    new_rook = Rook(x, y, white)
-    new_board[board_location] = new_rook
+    new_rook = Rook ((x,y), white)
+    new_board[(x,y)] = new_rook
     return new_board
 
 def place_knights(board, x, y, white=True):
     new_board = board
-    board_location = f"{name_column(x)}{y + 1}"
-    new_knight = Knight(x, y, white)
-    new_board[board_location] = new_knight
+    new_knight = Knight((x,y), white)
+    new_board[(x,y)] = new_knight
     return new_board
 
 def place_bishops(board, x, y, white=True):
     new_board = board
-    board_location = f"{name_column(x)}{y + 1}"
-    new_bishop = Bishop(x, y, white)
-    new_board[board_location] = new_bishop
+    new_bishop = Bishop((x,y), white)
+    new_board[(x,y)] = new_bishop
     return new_board
 
 def place_queens(board, x, y, white=True):
     new_board = board
-    board_location = f"{name_column(x)}{y + 1}"
-    new_queen = Queen(x, y, white)
-    new_board[board_location] = new_queen
+    new_queen = Queen((x,y), white)
+    new_board[(x,y)] = new_queen
     return new_board
 
 def place_kings(board, x, y, white=True):
     new_board = board
-    board_location = f"{name_column(x)}{y + 1}"
-    new_king = King(x, y, white)
-    new_board[board_location] = new_king
+    new_king = King((x,y), white)
+    new_board[(x,y)] = new_king
     return new_board
+
 
 def generate_starting_board(board):
     # Place pawns
@@ -81,9 +76,9 @@ def generate_starting_board(board):
     board = place_queens(board, 3, 7, False)
     board = place_kings(board, 4, 0, True)
     board = place_kings(board, 4, 7, False)
+
     return board
 
-board = generate_starting_board(create_board())
-
-
+blank_board = create_board()
+board = generate_starting_board(blank_board)
 draw_board(board)

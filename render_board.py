@@ -26,7 +26,7 @@ def draw_board(board):
         print ("")
 
 def draw_square(x, y, board):
-    tmp = board[f"{name_column(x)}{y+1}"] 
+    tmp = board[(x,y)]
     piece = draw_piece(tmp)
     if x < 7:
         print (f"|{piece}", end = "")
