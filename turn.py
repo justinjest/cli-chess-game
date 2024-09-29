@@ -31,6 +31,7 @@ def piece_validation(dest, piece, board):
         return (dest)
     else:
         print ("Sorry! Can't make that move")
+        print(piece.is_move_valid(board))
         return move_validation(board)
         
 
