@@ -34,6 +34,13 @@ def piece_validation(dest, piece, board):
         print(piece.is_move_valid(board))
         return move_validation(board)
         
+def get_all_moves(board):
+    moves = []
+    for square in board.values():
+        if square != "":
+            moves.append((square.symbol, square.is_move_valid(board)))
+    
+    return moves
 
 def input_validation():
     move = input("Please enter your move in the form of (a,b)(x,y) ")
