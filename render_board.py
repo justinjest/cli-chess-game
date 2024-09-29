@@ -4,6 +4,7 @@ from pieces import *
 # TODO: update screen instead of redraw it
 
 def draw_board(board):
+    # TODO: turn this into one long string so we can carriage return it
     spacer = " _"
     for i in range(0, 8):
         print (spacer, end = "")

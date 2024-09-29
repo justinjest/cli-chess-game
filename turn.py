@@ -16,16 +16,15 @@ def turn(board):
     return new_board
 
 def move_validation(board):
-    move = input_validation()
-    move = translate_move(board, move)
+    move = ""
+    while move is "":
+        tmp = input_validation()
+        move = translate_move(board, tmp)
     starting_pos = (move[0][0], move[0][1])
     ending_pos = (move[1][0], move[1][1])
     if board[starting_pos] != "":
         ending_move = piece_validation(ending_pos, board[starting_pos], board)
         return(starting_pos,ending_move)
-    else:
-        print("no piece there! Try again")
-        move_validation(board)
     
 def piece_validation(dest, piece, board):
     if dest in piece.is_move_valid(board):
@@ -81,6 +80,9 @@ def translate_move(board, move):
         print("There are multiple pieces that could move there. Please end the game")
         # TODO: Add handling here
         return
+    elif len(moves) == 0:
+        print("No valid moves found")
+        return ""
     return (moves[0][0], moves[0][1])
     
                 

@@ -309,5 +309,4 @@ class King(Piece):
                     else:
                         if board[(check_x, check_y)].white != self.white:
                             valid_moves.append((check_x, check_y))
-        print(valid_moves)
         return valid_moves
