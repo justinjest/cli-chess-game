@@ -3,22 +3,6 @@ from pieces import *
 # TODO: render numbers and letters around edge of board
 # TODO: update screen instead of redraw it
 
-
-
-def name_column(col_num):
-    replacement = {
-        0: 'a',
-        1: 'b',
-        2: 'c',
-        3: 'd',
-        4: 'e',
-        5: 'f',
-        6: 'g',
-        7: 'h'
-    }
-
-    return replacement[col_num]
-
 def draw_board(board):
     spacer = " _"
     for i in range(0, 8):

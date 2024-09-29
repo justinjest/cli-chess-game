@@ -6,7 +6,7 @@ from turn import *
 def main():
     board = generate_starting_board(create_board())
     draw_board(board)
-    print(get_all_moves(board))
+    game_loop_2_turns(board)
 
 # This is here for before I created checkmate conditions
 def game_loop_2_turns(board):
