@@ -149,7 +149,102 @@ class Queen(Piece):
     def __init__(self, x_y_pair, white):    
         super().__init__(white, x_y_pair[0], x_y_pair[1])
         self.symbol = "q"
-
+    def is_move_valid(self, board):
+        # TODO: Glitch in this where it does not render on screen when first attempt at move fails
+        valid_moves = []
+        # Check moves to the right and up
+        for i in range (1,8):
+            check_x = self.x + i
+            check_y = self.y + i
+            if check_x in range (0,8) and check_y in range (0,8):
+                if board[(check_x, check_y)] == '':
+                    valid_moves.append((check_x, check_y))
+                else:
+                    if board[(check_x, check_y)].white != self.white:
+                        valid_moves.append((check_x, check_y))
+                    break
+                    
+        # check left and up
+        for i in range (1, 8):
+            check_x = self.x - i
+            check_y = self.y + i
+            if check_x in range (0,8) and check_y in range (0,8):
+                if board[(check_x, check_y)] == '':
+                    valid_moves.append((check_x, check_y))
+                else:
+                    if board[(check_x, check_y)].white != self.white:
+                        valid_moves.append((check_x, check_y)) 
+                    break
+                    
+        # Check right and down
+        for i in range (1,8):
+            check_x = self.x + i
+            check_y = self.y - i
+            if check_x in range (0,8) and check_y in range (0,8):
+                if board[(check_x, check_y)] == '':
+                    valid_moves.append((check_x, check_y))
+                else:
+                    if board[(check_x, check_y)].white != self.white:
+                        valid_moves.append((check_x, check_y)) 
+                    break
+                    
+        # Check left and down
+        for i in range (1,8):
+            check_x = self.x - i
+            check_y = self.y - i
+            if check_x in range (0,8) and check_y in range (0,8):
+                if board[(check_x, check_y)] == '':
+                    valid_moves.append((check_x, check_y))
+                else:
+                    if board[(check_x, check_y)].white != self.white:
+                        valid_moves.append((check_x, check_y)) 
+                    break
+                    
+        # check right
+        for i in range (1,8):
+            check_x = self.x + i
+            if check_x in range (0,8):
+                if board[(check_x, self.y)] == '':
+                    valid_moves.append((check_x, self.y))
+                else:
+                    if board[(check_x, self.y)].white != self.white:
+                        valid_moves.append((check_x, self.y))
+                    break
+                    
+        # check left
+        for i in range (1, 8):
+            check_x = self.x - i
+            if check_x in range (0,8):
+                if board[(check_x, self.y)] == '':
+                    valid_moves.append((check_x, self.y))
+                else:
+                    if board[(check_x, self.y)].white != self.white:
+                        valid_moves.append((check_x, self.y)) 
+                    break
+                    
+        # Check down
+        for j in range (1,8):
+            check_y = self.y - j
+            if check_y in range (0,8):
+                if board[(self.x, check_y)] == '':
+                    valid_moves.append((self.x, check_y))
+                else:
+                    if board[(self.x, check_y)].white != self.white:
+                        valid_moves.append((self.x, check_y))
+                    break
+                    
+        # Check up
+        for j in range (1,8):
+            check_y = self.y + j
+            if check_y in range (0,8):
+                if board[(self.x, check_y)] == '':
+                    valid_moves.append((self.x, check_y))
+                else:
+                    if board[(self.x, check_y)].white != self.white:       
+                        valid_moves.append((self.x, check_y))
+                    break
+                    
+        return valid_moves
 class King(Piece):
     def __init__(self, x_y_pair, white):
         super().__init__(white, x_y_pair[0], x_y_pair[1])

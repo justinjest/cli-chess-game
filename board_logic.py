@@ -112,5 +112,5 @@ def generate_board_mate(board):
     board = place_pawns(board, 5, 1, False)
     board = place_pawns(board, 4, 1, False)
 
-    board = place_rooks(board, 7, 7, True)
+    board = place_queens(board, 0, 0, True)
     return board
