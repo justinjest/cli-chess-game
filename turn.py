@@ -77,9 +77,13 @@ def translate_move(board, move):
                     moves.append((piece[2], (second_letter, third_letter)))
     
     if len(moves) > 1:
-        print("There are multiple pieces that could move there. Please end the game")
-        # TODO: Add handling here
-        return
+        validated = ""
+        print("There are multiple pieces that could move there. Please provide the coordinates you want to move from")
+        while validated == "":
+            coords = input()
+            if coords.re(r"/([0-7],[0-7])"):
+                validated = coords
+        return(validated, moves[0][1])
     elif len(moves) == 0:
         print("No valid moves found")
         return ""
