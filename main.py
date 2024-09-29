@@ -37,8 +37,8 @@ def game_loop(board):
                 if square.symbol == "k":
                     if square.is_move_valid(board) == []:
                         game_over = True
-                        break
         player.white = not player.white
+    # For some reason this program flips the turn after game over, this flips it back to clarify who won
     print (f"Game over! {player_code[not player.white]} won")
 
 # This is placeholder to generate options in the future (Like connecting online)

@@ -44,7 +44,17 @@ class Rook(Piece):
         # TODO: Glitch in this where it does not render on screen when first attempt at move fails
         # TODO: stop this when it encounters an opposing piece
         valid_moves = []
-        for i in range (-7,9):
+        # Check moves to the right
+        for i in range (0,7):
+            check_x = self.x + i
+            # We can improve this by checking up, and then down allowing us to stop when we run into a piece
+            if check_x in range (0,8):
+                if board[(check_x, self.y)] == '':
+                    valid_moves.append((check_x, self.y))
+                else:
+                    if board[(check_x, self.y)].white != self.white:
+                        valid_moves.append((check_x, self.y)) 
+        for i in range (0, 7):
             check_x = self.x - i
             # We can improve this by checking up, and then down allowing us to stop when we run into a piece
             if check_x in range (0,8):
@@ -53,13 +63,21 @@ class Rook(Piece):
                 else:
                     if board[(check_x, self.y)].white != self.white:
                         valid_moves.append((check_x, self.y)) 
-        for j in range (-7, 9):
+        for j in range (0,7):
             check_y = self.y - j
             if check_y in range (0,8):
                 if board[(self.x, check_y)] == '':
                     valid_moves.append((self.x, check_y))
                 else:
                     if board[(self.x, check_y)].white != self.white:
+                        valid_moves.append((self.x, check_y))
+        for j in range (0,7):
+            check_y = self.y + j
+            if check_y in range (0,8):
+                if board[(self.x, check_y)] == '':
+                    valid_moves.append((self.x, check_y))
+                else:
+                    if board[(self.x, check_y)].white != self.white:       
                         valid_moves.append((self.x, check_y))
         return valid_moves
     
@@ -85,6 +103,7 @@ class King(Piece):
         self.symbol = "k"
     def is_move_valid(self, board):
         # TODO: prevent moving into check
+        # This will require an array of all valid moves, so it can't be completed until those are all done
         valid_moves = []
         for i in range (-1,2):
             for j in range (-1,2):
