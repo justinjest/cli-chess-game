@@ -44,7 +44,7 @@ class Rook(Piece):
         # TODO: Glitch in this where it does not render on screen when first attempt at move fails
         valid_moves = []
         # Check moves to the right
-        for i in range (0,8):
+        for i in range (1,8):
             check_x = self.x + i
             # We can improve this by checking up, and then down allowing us to stop when we run into a piece
             if check_x in range (0,8):
@@ -52,9 +52,11 @@ class Rook(Piece):
                     valid_moves.append((check_x, self.y))
                 else:
                     if board[(check_x, self.y)].white != self.white:
-                        valid_moves.append((check_x, self.y)) 
+                        valid_moves.append((check_x, self.y))
+                    break
+
         # check left
-        for i in range (0, 8):
+        for i in range (1, 8):
             check_x = self.x - i
             # We can improve this by checking up, and then down allowing us to stop when we run into a piece
             if check_x in range (0,8):
@@ -63,8 +65,10 @@ class Rook(Piece):
                 else:
                     if board[(check_x, self.y)].white != self.white:
                         valid_moves.append((check_x, self.y)) 
+                    break
+
         # Check down
-        for j in range (0,8):
+        for j in range (1,8):
             check_y = self.y - j
             if check_y in range (0,8):
                 if board[(self.x, check_y)] == '':
@@ -72,8 +76,10 @@ class Rook(Piece):
                 else:
                     if board[(self.x, check_y)].white != self.white:
                         valid_moves.append((self.x, check_y))
+                    break
+
         # Check up
-        for j in range (0,8):
+        for j in range (1,8):
             check_y = self.y + j
             if check_y in range (0,8):
                 if board[(self.x, check_y)] == '':
@@ -81,6 +87,8 @@ class Rook(Piece):
                 else:
                     if board[(self.x, check_y)].white != self.white:       
                         valid_moves.append((self.x, check_y))
+                    break
+                
         return valid_moves
     
 
@@ -98,7 +106,7 @@ class Bishop(Piece):
         # TODO: Glitch in this where it does not render on screen when first attempt at move fails
         valid_moves = []
         # Check moves to the right and up
-        for i in range (0,8):
+        for i in range (1,8):
             check_x = self.x + i
             check_y = self.y + i
             if check_x in range (0,8) and check_y in range (0,8):
@@ -106,11 +114,11 @@ class Bishop(Piece):
                     valid_moves.append((check_x, check_y))
                 else:
                     if board[(check_x, check_y)].white != self.white:
-                        valid_moves.append((check_x, check_y)) 
-            else:
-                break
+                        valid_moves.append((check_x, check_y))
+                    break
+
         # check left and up
-        for i in range (0, 8):
+        for i in range (1, 8):
             check_x = self.x - i
             check_y = self.y + i
             if check_x in range (0,8) and check_y in range (0,8):
@@ -119,8 +127,10 @@ class Bishop(Piece):
                 else:
                     if board[(check_x, check_y)].white != self.white:
                         valid_moves.append((check_x, check_y)) 
+                    break
+
         # Check right and down
-        for j in range (0,8):
+        for j in range (1,8):
             check_x = self.x + j
             check_y = self.y - j
             if check_x in range (0,8) and check_y in range (0,8):
@@ -129,10 +139,10 @@ class Bishop(Piece):
                 else:
                     if board[(check_x, check_y)].white != self.white:
                         valid_moves.append((check_x, check_y)) 
-            else:
-                break
+                    break
+
         # Check left and down
-        for j in range (0,8):
+        for j in range (1,8):
             check_x = self.x - j
             check_y = self.y - j
             if check_x in range (0,8) and check_y in range (0,8):
@@ -141,8 +151,8 @@ class Bishop(Piece):
                 else:
                     if board[(check_x, check_y)].white != self.white:
                         valid_moves.append((check_x, check_y)) 
-            else:
-                break
+                    break
+
         return valid_moves
 
 class Queen(Piece):
