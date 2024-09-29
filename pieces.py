@@ -24,6 +24,12 @@ class Pawn(Piece):
             else:
                 if board[self.x, self.y + 1] == '':
                     valid_moves.append((self.x, self.y + 1))
+            
+            # Capture logic for white
+            if board[self.x + 1, self.y + 1] != '':
+                valid_moves.append((self.x + 1, self.y + 1))
+            if board[self.x + 1, self.y - 1] != '':
+                valid_moves.append((self.x + 1, self.y - 1))
         else:
             if self.y == 6:
                 if board[self.x, self.y - 1] == '':
@@ -33,8 +39,15 @@ class Pawn(Piece):
             else:
                 if board[self.x, self.y - 1] == '':
                     valid_moves.append((self.x, self.y - 1))
+            # Capture logic for black   
+            if board[self.x - 1, self.y + 1] != '':
+                valid_moves.append((self.x - 1, self.y + 1))
+            if board[self.x - 1, self.y - 1] != '':
+                valid_moves.append((self.x - 1, self.y - 1))
+
+                
         return (valid_moves)
-        # TODO: Implement this for all pieces
+
 
 class Rook(Piece):
     def __init__(self, x_y_pair, white):
@@ -88,7 +101,7 @@ class Rook(Piece):
                     if board[(self.x, check_y)].white != self.white:       
                         valid_moves.append((self.x, check_y))
                     break
-                
+
         return valid_moves
     
 
