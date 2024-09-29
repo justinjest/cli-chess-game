@@ -17,7 +17,7 @@ def turn(board):
 
 def move_validation(board):
     move = ""
-    while move is "":
+    while move == "":
         tmp = input_validation()
         move = translate_move(board, tmp)
     starting_pos = (move[0][0], move[0][1])
@@ -42,7 +42,7 @@ def get_all_moves(board):
     return moves
 
 def input_validation():
-    move = input("Please enter your move in the form of Rh7 ")
+    move = input("\r Please enter your move in the form of Rh7 ")
     # Make sure the move they entered is the correct format
     move_validation_regex = re.compile(r'[rqpnkb][a-h][1-8]')
     if not move_validation_regex.match(move):
@@ -83,6 +83,7 @@ def translate_move(board, move):
             coords = input()
             if coords.re(r"/([0-7],[0-7])"):
                 validated = coords
+        # TODO: Check to make sure the originating piece is actually at this location
         return(validated, moves[0][1])
     elif len(moves) == 0:
         print("No valid moves found")

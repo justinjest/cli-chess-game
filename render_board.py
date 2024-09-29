@@ -6,21 +6,23 @@ from pieces import *
 def draw_board(board):
     # TODO: turn this into one long string so we can carriage return it
     spacer = " _"
+    board_render = ""
     for i in range(0, 8):
-        print (spacer, end = "")
-    print ("")
+        board_render += spacer
+    board_render += "\n"
     for y in range(7, -1, -1):
         for x in range (0, 8):
-            draw_square(x, y, board)
-        print ("")
+            board_render += draw_square (x,y,board)
+        board_render += "\n"
+    print(board_render)
 
 def draw_square(x, y, board):
     tmp = board[(x,y)]
     piece = draw_piece(tmp)
     if x < 7:
-        print (f"|{piece}", end = "")
+        return (f"|{piece}")
     if x == 7:
-        print(f"|{piece}|", end = "")
+        return(f"|{piece}|")
         
 
 def draw_piece(piece):

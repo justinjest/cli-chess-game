@@ -15,7 +15,7 @@ def game_loop_2_turns(board):
     player_code = {False: "black",
               True: "white"}
     while game_over == False:
-        print (f"It is {player_code[player.white]}'s turn!")
+        print (f"\r It is {player_code[player.white]}'s turn!")
         board = turn(board)
         draw_board(board)
         if not player.white:
