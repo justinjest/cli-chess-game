@@ -45,7 +45,7 @@ class Pawn(Piece):
             if board[self.x - 1, self.y - 1] != '':
                 valid_moves.append((self.x - 1, self.y - 1))
 
-                
+
         return (valid_moves)
 
 
@@ -109,6 +109,25 @@ class Knight(Piece):
     def __init__(self, x_y_pair, white):
         super().__init__(white, x_y_pair[0], x_y_pair[1])
         self.symbol = "n"
+    
+    def is_move_valid(self,board):
+        valid_moves = []
+        possible_moves = []
+
+        twos = [2, -2]
+        ones = [1, -1]
+
+        for two in twos:
+            for one in ones:
+                possible_moves.append((self.x + two, self.y + one))
+                possible_moves.append((self.x + one, self.y + two))
+
+        for possible_move in possible_moves:
+            if possible_move[0] in range (0, 8) and possible_move[1] in range (0, 8):
+                valid_moves.append(possible_move)
+        
+
+        return valid_moves
 
 class Bishop(Piece):
     def __init__(self, x_y_pair, white):

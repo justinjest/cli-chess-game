@@ -4,7 +4,7 @@ from player import Player
 from turn import *
 
 def main():
-    board = generate_board_mate(create_board())
+    board = generate_board_piece(create_board())
     draw_board(board)
     game_loop(board)
 

@@ -114,3 +114,7 @@ def generate_board_mate(board):
 
     board = place_queens(board, 0, 0, True)
     return board
+
+def generate_board_piece(board):
+    board = place_knights(board, 4, 4, False)
+    return board
