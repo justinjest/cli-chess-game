@@ -20,8 +20,10 @@ def move_validation(board):
     while move == "":
         tmp = input_validation()
         move = translate_move(board, tmp)
+    # This calls the coords of the piece you are moving move[0] is the starting position move[1] is the ending position
     starting_pos = (move[0][0], move[0][1])
     ending_pos = (move[1][0], move[1][1])
+    # If the starting_pos has a piece validate it's a valid movement for that piece
     if board[starting_pos] != "":
         ending_move = piece_validation(ending_pos, board[starting_pos], board)
         return(starting_pos,ending_move)
@@ -44,10 +46,13 @@ def get_all_moves(board):
 def input_validation():
     move = input("Please enter your move in the form of Rh7 ")
     # Make sure the move they entered is the correct format
+    # TODO add capture notation Rxh7
+    # TODO add pawn notation (e7) instead of (pe7)
+
     move_validation_regex = re.compile(r'[rqpnkb][a-h][1-8]')
     if not move_validation_regex.match(move):
         print("That isn't on the board, please try again")
-        input_validation
+        input_validation()
     return move
 
 def name_column(col_num):
@@ -76,19 +81,30 @@ def translate_move(board, move):
                 if (second_letter, third_letter) == tuple:
                     moves.append((piece[2], (second_letter, third_letter)))
     
+    # If two similiar pieces can move to the same square, we need to clarify which one we are looking at
     if len(moves) > 1:
         validated = ""
         print("There are multiple pieces that could move there. Please provide the coordinates you want to move from")
         while validated == "":
             coords = input()
-            coords_regex = re.compile(r"/([0-7],[0-7])")
-            if coords_regex.match(coords):
-                validated = coords
+            for i in moves:
+                if coords == str(i[0]):
+                    print("Okay!")
+                    validated = i[0]
+                    break
+            else: 
+                print("That isn't a valid starting point. Please ensure you enter the full coordinate (x, y).")
+                print("You can see the possible starting moves below")
+                for i in moves:
+                    print(i[0], end = '')
+                print ()
         # TODO: Check to make sure the originating piece is actually at this location
         return(validated, moves[0][1])
     elif len(moves) == 0:
         print("No valid moves found")
         return ""
-    return (moves[0][0], moves[0][1])
+    # If there is only one option, we just return the move
+    else:
+        return (moves[0][0], moves[0][1])
     
                 
