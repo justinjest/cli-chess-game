@@ -11,8 +11,7 @@ class Pawn(Piece):
         super().__init__(white, x_y_pair[0], x_y_pair[1])
         self.symbol = "p"
     # returns a list of valid moves
-    def is_move_valid(self, board):
-        # TODO: add capture logic
+    def is_move_valid(self, board): 
         # TODO: add en passant (HOW)
         valid_moves = []
         if self.white == True:
@@ -139,7 +138,6 @@ class Bishop(Piece):
         self.symbol = "b"
     
     def is_move_valid(self, board):
-        # TODO: Glitch in this where it does not render on screen when first attempt at move fails
         valid_moves = []
         # Check moves to the right and up
         for i in range (1,8):
@@ -196,7 +194,6 @@ class Queen(Piece):
         super().__init__(white, x_y_pair[0], x_y_pair[1])
         self.symbol = "q"
     def is_move_valid(self, board):
-        # TODO: Glitch in this where it does not render on screen when first attempt at move fails
         valid_moves = []
         # Check moves to the right and up
         for i in range (1,8):
@@ -298,6 +295,7 @@ class King(Piece):
     def is_move_valid(self, board):
         # TODO: prevent moving into check
         # This will require an array of all valid moves, so it can't be completed until those are all done
+        # TODO: add castling O-O and O-O-O
         valid_moves = []
         for i in range (-1,2):
             for j in range (-1,2):

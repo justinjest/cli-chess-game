@@ -5,7 +5,7 @@
 # We then reender the next board
 import re
 
-# TODO: convert move into something akin to chess notation (r E7) etc
+# TODO: Make sure you can only move pieces of the color of the current player's turn
 
 def turn(board):
     new_board = board
@@ -42,7 +42,7 @@ def get_all_moves(board):
     return moves
 
 def input_validation():
-    move = input("\r Please enter your move in the form of Rh7 ")
+    move = input("Please enter your move in the form of Rh7 ")
     # Make sure the move they entered is the correct format
     move_validation_regex = re.compile(r'[rqpnkb][a-h][1-8]')
     if not move_validation_regex.match(move):
@@ -81,7 +81,8 @@ def translate_move(board, move):
         print("There are multiple pieces that could move there. Please provide the coordinates you want to move from")
         while validated == "":
             coords = input()
-            if coords.re(r"/([0-7],[0-7])"):
+            coords_regex = re.compile(r"/([0-7],[0-7])")
+            if coords_regex.match(coords):
                 validated = coords
         # TODO: Check to make sure the originating piece is actually at this location
         return(validated, moves[0][1])

@@ -117,3 +117,8 @@ def generate_board_mate(board):
 def generate_board_piece(board):
     board = place_knights(board, 4, 4, False)
     return board
+
+def generate_ambigious_board(board):
+    board = place_rooks(board, 0, 7, True)
+    board = place_rooks(board, 7, 7, True)
+    return board
