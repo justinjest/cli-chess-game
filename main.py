@@ -16,11 +16,13 @@ def game_loop_2_turns(board):
               True: "white"}
     while game_over == False:
         print (f"\r It is {player_code[player.white]}'s turn!")
-        board = turn(board)
-        draw_board(board)
+        board_after = turn(board, player)
+        draw_board(board_after)
         if not player.white:
             game_over = True
         player.white = not player.white
+    if game_over == False:
+        raise Exception ("left game_loop before game_over")
 
 
 def game_loop(board):

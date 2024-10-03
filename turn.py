@@ -7,15 +7,15 @@ import re
 
 # TODO: Make sure you can only move pieces of the color of the current player's turn
 
-def turn(board):
+def turn(board, player):
     new_board = board
-    move = move_validation(new_board)
+    move = move_validation(new_board, player)
     # This should print a piece if it's a valid move
     new_board[move[1]] = new_board[move[0]]
     new_board[move[0]] = ''
     return new_board
 
-def move_validation(board):
+def move_validation(board, player):
     move = ""
     while move == "":
         tmp = input_validation()
@@ -25,8 +25,13 @@ def move_validation(board):
     ending_pos = (move[1][0], move[1][1])
     # If the starting_pos has a piece validate it's a valid movement for that piece
     if board[starting_pos] != "":
-        ending_move = piece_validation(ending_pos, board[starting_pos], board)
-        return(starting_pos,ending_move)
+        if player.white == board[starting_pos].white:
+            ending_move = piece_validation(ending_pos, board[starting_pos], board)
+            return(starting_pos,ending_move)
+        else:
+            print("Whoops, that's the wrong colored piece!")
+    else: 
+        return move_validation(board, player)
     
 def piece_validation(dest, piece, board):
     if dest in piece.is_move_valid(board):
@@ -80,7 +85,7 @@ def translate_move(board, move):
             for tuple in piece[1]:
                 if (second_letter, third_letter) == tuple:
                     moves.append((piece[2], (second_letter, third_letter)))
-    
+    print(moves)
     # If two similiar pieces can move to the same square, we need to clarify which one we are looking at
     if len(moves) > 1:
         validated = ""
