@@ -302,6 +302,8 @@ class King(Piece):
                 check_x = self.x - i
                 check_y = self.y - j
                 if check_x in range (0,8) and check_y in range(0,8):
+                    # This is an optimistic idea of how kings move
+                    # Namely it doesn't prevent you from moving into check, and can't tell if you are in the line of fire
                     if board[(check_x, check_y)] == '':
                         valid_moves.append((check_x, check_y))
                     else:
