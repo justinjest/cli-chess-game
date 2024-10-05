@@ -13,6 +13,9 @@ def turn(board, player):
     # This should print a piece if it's a valid move
     new_board[move[1]] = new_board[move[0]]
     new_board[move[0]] = ''
+    # Check here to determine if game is over with new_board
+
+    # Return (new_board, game_over_flag)
     return new_board
 
 def move_validation(board, player):
@@ -76,6 +79,7 @@ def name_column(col_num):
 
 def translate_move(board, move):
     # takes a move in form Ra8 and converts it to form (0,0)(0,8)
+    # Breaks if there are no available moves and the game is not over
     all_moves = get_all_moves(board)
     moves = []
     for piece in all_moves:
@@ -112,4 +116,18 @@ def translate_move(board, move):
     else:
         return (moves[0][0], moves[0][1])
     
-                
+
+# Board -> [0-2]
+# interp. 0 game is not over
+#         1 game is a draw
+#         2 current player is winner
+def is_game_over(board):
+    for square in board.values():
+            if square != "":
+                if square.symbol == "k":
+                    k_pos = (square.x, square.y)
+                    if square.is_move_valid(board) == []:
+                        return 1
+    if k_pos in get_all_moves(board)[1]:
+        return 2
+    return 0

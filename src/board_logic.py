@@ -7,7 +7,6 @@ def create_board():
     board = {}
     for y in range (7, -1, -1):
         for x in range (0, 8):
-            # Refactor this into a tuple, it will make the piece logic much simpler
             board[(x,y)] = ""
     return (board)
 
@@ -120,5 +119,5 @@ def generate_board_piece(board):
 
 def generate_ambigious_board(board):
     board = place_rooks(board, 0, 7, True)
-    board = place_rooks(board, 7, 7, True)
+    board = place_rooks(board, 7, 7, False)
     return board
