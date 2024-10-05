@@ -62,6 +62,21 @@ def get_black_moves(board):
                 moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)]) 
     return moves
 
+def get_white_checks(board):
+    moves = []
+    for square in board.values():
+        if square != "" and square.symbol != "k":
+            if square.white:
+                moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)])
+    return moves
+
+def get_black_checks(board):
+    moves = []
+    for square in board.values():
+        if square != "" and square.symbol != "k":
+            if not square.white:
+                moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)])
+    return moves
 
 def input_validation():
     move = input("Please enter your move in the form of Rh7 ")
@@ -145,12 +160,12 @@ def is_game_over(board):
                         for possible in checked_black:
                             if k_pos in possible[1]:
                                 return 2
-                            elif square.is_move_valid(board) == [] and len(checked_white) == 0:
+                            elif square.is_move_valid(board) == [] and len(checked_white) == 1:
                                 return 1
                     if not color:
                         for possible in checked_white:
                             if k_pos in possible[1]:
                                 return 2
-                            elif square.is_move_valid(board) == [] and len(checked_black) == 0:
+                            elif square.is_move_valid(board) == [] and len(checked_black) == 1:
                                 return 1
     return 0
