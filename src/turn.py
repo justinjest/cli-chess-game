@@ -59,7 +59,7 @@ def get_black_moves(board):
     for square in board.values():
         if square != "":
             if not square.white:
-                moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)])   
+                moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)]) 
     return moves
 
 
@@ -134,17 +134,23 @@ def translate_move(board, move):
 #         1 game is a draw
 #         2 current player is winner
 def is_game_over(board):
+    checked_black = get_black_moves(board)
+    checked_white = get_white_moves(board)
     for square in board.values():
             if square != "":
                 if square.symbol == "k":
                     k_pos = (square.x, square.y)
                     color = square.white
                     if color:
-                        checked = get_black_moves(board)
-                        if k_pos in checked[2]:
-                            return 2
+                        for possible in checked_black:
+                            if k_pos in possible[1]:
+                                return 2
+                            elif square.is_move_valid(board) == [] and len(checked_white) == 0:
+                                return 1
                     if not color:
-                        checked = get_white_moves(board)
-                        if k_pos in checked[2]:
-                            return 2
+                        for possible in checked_white:
+                            if k_pos in possible[1]:
+                                return 2
+                            elif square.is_move_valid(board) == [] and len(checked_black) == 0:
+                                return 1
     return 0

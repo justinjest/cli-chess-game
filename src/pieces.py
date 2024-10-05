@@ -41,7 +41,7 @@ class Pawn(Piece):
                 if board[self.x, self.y - 1] == '':
                     valid_moves.append((self.x, self.y - 1))
             # Capture logic for black   
-            if self.y-1 in range(0,8):
+            if self.y - 1 in range(0,8):
                 if self.x - 1 in range (0,8) and self.x + 1 in range (0,8):
                     if board[self.x + 1, self.y - 1] != '':
                         valid_moves.append((self.x + 1, self.y - 1))
