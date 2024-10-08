@@ -14,6 +14,7 @@ class Pawn(Piece):
     # returns a list of valid moves
     def is_move_valid(self, board): 
         # TODO: add en passant (HOW)
+        # TODO: add promotion
         valid_moves = []
         if self.white == True:
             if self.y == 1:
@@ -59,8 +60,8 @@ class Rook(Piece):
     def __init__(self, x_y_pair, white):
         super().__init__(white, x_y_pair[0], x_y_pair[1]) 
         self.symbol = "r"
+        self.moved = False
     def is_move_valid(self, board):
-        # TODO: Glitch in this where it does not render on screen when first attempt at move fails
         valid_moves = []
         # Check moves to the right
         for i in range (1,8):
@@ -109,7 +110,6 @@ class Rook(Piece):
                     break
 
         return valid_moves
-    
 
 class Knight(Piece):     
     def __init__(self, x_y_pair, white):
@@ -296,9 +296,8 @@ class King(Piece):
     def __init__(self, x_y_pair, white):
         super().__init__(white, x_y_pair[0], x_y_pair[1])
         self.symbol = "k"
+        self.moved = False
     def is_move_valid(self, board):
-        # TODO: prevent moving into check
-        # This will require an array of all valid moves, so it can't be completed until those are all done
         # TODO: add castling O-O and O-O-O
         valid_moves = []
         for i in range (-1,2):
@@ -306,8 +305,6 @@ class King(Piece):
                 check_x = self.x - i
                 check_y = self.y - j
                 if check_x in range (0,8) and check_y in range(0,8):
-                    # This is an optimistic idea of how kings move
-                    # Namely it doesn't prevent you from moving into check, and can't tell if you are in the line of fire
                     if board[(check_x, check_y)] == '':
                         valid_moves.append((check_x, check_y))
                     else:

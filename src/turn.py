@@ -11,6 +11,8 @@ def turn(board, player):
     new_board = board
     move = move_validation(new_board, player)
     # This should print a piece if it's a valid move
+    if board[move[0]].symbol == 'k' or board[move[0]].symbol == 'r':
+       board[move[0]].moved = True
     new_board[move[1]] = new_board[move[0]]
     new_board[move[0]] = ''
     # Check here to determine if game is over with new_board
@@ -117,7 +119,6 @@ def translate_move(board, move):
             for tuple in piece[1]:
                 if (second_letter, third_letter) == tuple:
                     moves.append((piece[2], (second_letter, third_letter)))
-    print(moves)
     # If two similiar pieces can move to the same square, we need to clarify which one we are looking at
     if len(moves) > 1:
         validated = ""

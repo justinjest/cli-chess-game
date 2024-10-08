@@ -4,7 +4,7 @@ from player import Player
 from turn import *
 
 def main():
-    board = pawn_capture(create_board())
+    board = generate_board_no_pawns(create_board())
     draw_board(board)
     game_loop_2_turns(board)
 
