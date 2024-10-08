@@ -4,9 +4,9 @@ from player import Player
 from turn import *
 
 def main():
-    board = generate_starting_board(create_board())
+    board = pawn_capture(create_board())
     draw_board(board)
-    game_loop(board)
+    game_loop_2_turns(board)
 
 # This is here for before I created checkmate conditions
 def game_loop_2_turns(board):

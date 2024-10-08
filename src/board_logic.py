@@ -46,7 +46,6 @@ def place_kings(board, x, y, white=True):
     new_board[(x,y)] = new_king
     return new_board
 
-
 def generate_starting_board(board):
     # Place pawns
     for i in range(0, 8):
@@ -122,4 +121,9 @@ def generate_board_piece(board):
 def generate_ambigious_board(board):
     board = place_rooks(board, 0, 7, True)
     board = place_rooks(board, 7, 7, False)
+    return board
+
+def pawn_capture(board):
+    board = place_pawns(board,7, 2, True)
+    board = place_pawns(board,6, 3, False)
     return board
