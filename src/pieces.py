@@ -299,10 +299,6 @@ class King(Piece):
         # This will require an array of all valid moves, so it can't be completed until those are all done
         # TODO: add castling O-O and O-O-O
         valid_moves = []
-        if self.white:
-            checked = get_black_checks(board)
-        else:
-            checked = get_white_checks(board)
         for i in range (-1,2):
             for j in range (-1,2):
                 check_x = self.x - i
@@ -311,10 +307,15 @@ class King(Piece):
                     # This is an optimistic idea of how kings move
                     # Namely it doesn't prevent you from moving into check, and can't tell if you are in the line of fire
                     if board[(check_x, check_y)] == '':
-                        for space in checked:
-                            if board[(check_x, check_y)] not in space[1]:
-                                valid_moves.append((check_x, check_y))
+                        valid_moves.append((check_x, check_y))
                     else:
                         if board[(check_x, check_y)].white != self.white:
                             valid_moves.append((check_x, check_y))
+        if self.white:
+            checks = get_white_checks(board)
+        if not self.white:
+            checks = get_black_checks(board)
+        for i in checks:
+            if i in valid_moves:
+                valid_moves.remove(i)
         return valid_moves

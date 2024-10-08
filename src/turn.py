@@ -29,7 +29,7 @@ def move_validation(board, player):
     # If the starting_pos has a piece validate it's a valid movement for that piece
     if board[starting_pos] != "":
         if player.white == board[starting_pos].white:
-            ending_move = piece_validation(ending_pos, board[starting_pos], board)
+            ending_move = piece_validation(ending_pos, board[starting_pos], board, player)
             return(starting_pos,ending_move)
         else:
             print("Whoops, that's the wrong colored piece!")
@@ -37,12 +37,12 @@ def move_validation(board, player):
     else: 
         return move_validation(board, player)
     
-def piece_validation(dest, piece, board):
+def piece_validation(dest, piece, board, player):
     if dest in piece.is_move_valid(board):
         return (dest)
     else:
         print ("Sorry! Can't make that move")
-        return move_validation(board)
+        return move_validation(board, player)
         
 def get_all_moves(board):
     return get_white_moves(board) + get_black_moves(board)
@@ -121,6 +121,7 @@ def translate_move(board, move):
     # If two similiar pieces can move to the same square, we need to clarify which one we are looking at
     if len(moves) > 1:
         validated = ""
+        print(board)
         print("There are multiple pieces that could move there. Please provide the coordinates you want to move from")
         while validated == "":
             coords = input()
