@@ -4,9 +4,9 @@ from player import Player
 from turn import *
 
 def main():
-    board = generate_losing_board(create_board())
+    board = generate_starting_board(create_board())
     draw_board(board)
-    game_loop_2_turns(board)
+    game_loop(board)
 
 # This is here for before I created checkmate conditions
 def game_loop_2_turns(board):
@@ -26,19 +26,15 @@ def game_loop_2_turns(board):
 
 
 def game_loop(board):
-    game_over = False
+    game_over = 0
     player = Player(True)
     player_code = {False: "black",
               True: "white"}
-    while game_over == False:
+    while game_over == 0:
+        game_over = is_game_over(board)
         print (f"It is {player_code[player.white]}'s turn!")
-        board = turn(board)
+        board = turn(board, player)
         draw_board(board)
-        for square in board.values():
-            if square != "":
-                if square.symbol == "k":
-                    if square.is_move_valid(board) == []:
-                        game_over = True
         player.white = not player.white
     # For some reason this program flips the turn after game over, this flips it back to clarify who won
     print (f"Game over! {player_code[not player.white]} won")

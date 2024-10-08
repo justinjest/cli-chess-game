@@ -33,6 +33,7 @@ def move_validation(board, player):
             return(starting_pos,ending_move)
         else:
             print("Whoops, that's the wrong colored piece!")
+            return move_validation(board,player)
     else: 
         return move_validation(board, player)
     
