@@ -10,14 +10,14 @@ import re
 def turn(board, player):
     new_board = board
     move = move_validation(new_board, player)
-    print (move)
     # This should print a piece if it's a valid move
     if move != "O-O" and move != "O-O-O":
+        print ("Not castle")
         if board[move[0]].symbol == 'k' or board[move[0]].symbol == 'r':
             board[move[0]].moved = True
-            new_board[move[1]] = new_board[move[0]]
-            new_board[move[0]] = ''
-            # Check here to determine if game is over with new_board
+        new_board[move[1]] = new_board[move[0]]
+        new_board[move[0]] = ''
+        # Check here to determine if game is over with new_board
     elif move == "O-O-O":
         if casteling_left_possible(board, player):
             if player.white:
@@ -76,6 +76,47 @@ def move_validation(board, player):
             return move_validation(board,player)
     else: 
         return move_validation(board, player)
+
+def translate_move(board, move):
+    # takes a move in form Ra8 and converts it to form (0,0)(0,8)
+    # Breaks if there are no available moves and the game is not over
+    all_moves = get_all_moves(board)
+    moves = []
+    for piece in all_moves:
+        if piece[0] == move[0].lower():
+            second_letter = name_column(move[1])
+            third_letter = int(move[2]) - 1
+            for tuple in piece[1]:
+                if (second_letter, third_letter) == tuple:
+                    moves.append((piece[2], (second_letter, third_letter)))
+    # If two similiar pieces can move to the same square, we need to clarify which one we are looking at
+    if len(moves) > 1:
+        validated = ""
+        print(board)
+        print("There are multiple pieces that could move there. Please provide the coordinates you want to move from")
+        while validated == "":
+            coords = input()
+            for i in moves:
+                if coords == str(i[0]):
+                    print("Okay!")
+                    validated = i[0]
+                    break
+            else: 
+                print("That isn't a valid starting point. Please ensure you enter the full coordinate (x, y).")
+                print("You can see the possible starting moves below")
+                for i in moves:
+                    print(i[0], end = '')
+                print ()
+        # TODO: Check to make sure the originating piece is actually at this location
+        return(validated, moves[0][1])
+    elif len(moves) == 0:
+        print("No valid moves found")
+        return ""
+    # If there is only one option, we just return the move unless it's a castle
+    # Casteling we will record the kings final location, even though it's not stored in the valid moves section
+    # And update the board
+    else:
+        return (moves[0][0], moves[0][1])
     
 def piece_validation(dest, piece, board, player):
     if dest in piece.is_move_valid(board):
@@ -204,52 +245,6 @@ def name_column(col_num):
     }
 
     return replacement[col_num]
-
-def translate_move(board, move):
-    # takes a move in form Ra8 and converts it to form (0,0)(0,8)
-    # Breaks if there are no available moves and the game is not over
-    if move == "O-O":
-        return "O-O"
-    if move == "O-O-O":
-        return "O-O-O"
-    all_moves = get_all_moves(board)
-    moves = []
-    for piece in all_moves:
-        if piece[0] == move[0].lower():
-            second_letter = name_column(move[1])
-            third_letter = int(move[2]) - 1
-            for tuple in piece[1]:
-                if (second_letter, third_letter) == tuple:
-                    moves.append((piece[2], (second_letter, third_letter)))
-    # If two similiar pieces can move to the same square, we need to clarify which one we are looking at
-    if len(moves) > 1:
-        validated = ""
-        print(board)
-        print("There are multiple pieces that could move there. Please provide the coordinates you want to move from")
-        while validated == "":
-            coords = input()
-            for i in moves:
-                if coords == str(i[0]):
-                    print("Okay!")
-                    validated = i[0]
-                    break
-            else: 
-                print("That isn't a valid starting point. Please ensure you enter the full coordinate (x, y).")
-                print("You can see the possible starting moves below")
-                for i in moves:
-                    print(i[0], end = '')
-                print ()
-        # TODO: Check to make sure the originating piece is actually at this location
-        return(validated, moves[0][1])
-    elif len(moves) == 0:
-        print("No valid moves found")
-        return ""
-    # If there is only one option, we just return the move unless it's a castle
-    # Casteling we will record the kings final location, even though it's not stored in the valid moves section
-    # And update the board
-    else:
-        return (moves[0][0], moves[0][1])
-    
 
 # Board -> [0-2]
 # interp. 0 game is not over
