@@ -1,10 +1,8 @@
 from pieces import *
 
-# TODO: render numbers and letters around edge of board
 # TODO: update screen instead of redraw it
 
 def draw_board(board):
-    # TODO: turn this into one long string so we can carriage return it
     spacer = " _"
     board_render = ""
     for i in range(0, 8):
@@ -13,7 +11,8 @@ def draw_board(board):
     for y in range(7, -1, -1):
         for x in range (0, 8):
             board_render += draw_square (x,y,board)
-        board_render += "\n"
+        board_render += f"{y+1} \n"
+    board_render += " a b c d e f g h \n"
     print(board_render)
 
 def draw_square(x, y, board):
