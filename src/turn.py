@@ -14,7 +14,10 @@ def turn(board, player):
     if move != "O-O" and move != "O-O-O":
         if board[move[0]].symbol == 'k' or board[move[0]].symbol == 'r':
             board[move[0]].moved = True
-        new_board[move[1]] = new_board[move[0]]
+        new_board[move[1]] = board[move[0]]
+        print (move[1][0], move[1][1])
+        new_board[move[0]].x = move[1][0]
+        new_board[move[0]].y = move[1][1]
         new_board[move[0]] = ''
         # Check here to determine if game is over with new_board
     elif move == "O-O-O":
@@ -51,7 +54,8 @@ def turn(board, player):
                 new_board[7,7] = ''
 
     # Return (new_board, game_over_flag)
-    new_board = pawn_promotion(board)
+    print (new_board)
+    new_board = pawn_promotion(new_board)
     return new_board
 
 def move_validation(board, player):
@@ -161,6 +165,9 @@ def input_validation():
 def casteling_left_possible(board, player):
     # Also known as long castle
     if player.white:
+        if board[4,0] == '':
+            return False
+        # King moved somewhere, don't need to worry about it
         if board[4,0].symbol != 'k':
             return False
         if board[4,0].moved == True:
@@ -174,6 +181,9 @@ def casteling_left_possible(board, player):
             return False 
         return True 
     if not player.white:
+        if board[4,7] == '':
+            return False
+        # King moved somewhere, don't need to worry about it
         if board[4,7].symbol != 'k':
             return False
         if board[4,7].moved == True:
@@ -190,6 +200,9 @@ def casteling_left_possible(board, player):
 def casteling_right_possible(board, player):
     # Also known as short castle
     if player.white:
+        if board[4,0] == '':
+            return False
+        # King moved somewhere, don't need to worry about it
         if board[4,0].symbol != 'k':
             return False
         if board[4,0].moved == True:
@@ -203,6 +216,9 @@ def casteling_right_possible(board, player):
             return False 
         return True 
     if not player.white:
+        if board[4,7] == '':
+            return False
+        # King moved somewhere, don't need to worry about it
         if board[4,7].symbol != 'k':
             return False
         if board[4,7].moved == True:
@@ -262,9 +278,14 @@ def pawn_promotion(board):
         if square != "":
             if square.symbol == "p":
                 if square.white == True:
+                    print (square.x, square.y)
                     if square.y == 7:
+                        print ("On the last rank")
                         new_board = place_queens(board, square.x, square.y, True)
+                        print(new_board)
                 if square.white == False:
                     if square.y == 0:
+                        print ("on the last rank")
                         new_board = place_queens(board, square.x, square.y, False)
+                        print(new_board)
     return new_board

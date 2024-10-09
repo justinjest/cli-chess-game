@@ -145,3 +145,10 @@ def generate_castle_test(board):
     board = place_kings(board, 4, 7, False)
 
     return board
+
+def generate_promotion_test(board):
+    for i in range(0, 8):
+        board = place_pawns(board, i, 6, True)
+    for y in range(0, 8):
+        board = place_pawns(board, y, 1, False)
+    return board

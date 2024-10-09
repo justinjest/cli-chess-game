@@ -1,4 +1,3 @@
-
 class Piece:
     # White is a boolean to represent white or black
     # White is True, black is False
