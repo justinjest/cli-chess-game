@@ -93,6 +93,65 @@ def input_validation():
         input_validation()
     return move
 
+def casteling_left_possible(board, player):
+    # Also known as long castle
+    if player.white:
+        if board[4,0].symbol != 'k':
+            return False
+        if board[4,0].moved == True:
+            return False
+        if board[0,0].symbol != 'r':
+            return False
+        if board[0,0].moved == True:
+            return False 
+        if board[1,0] != '' or board[2,0] != '' or board[3,0] != '':
+            # If the whole board is empty
+            return False 
+        return True 
+    if not player.white:
+        if board[4,7].symbol != 'k':
+            return False
+        if board[4,7].moved == True:
+            return False
+        if board[0,7].symbol != 'r':
+            return False
+        if board[0,7].moved == True:
+            return False 
+        if board[1,7] != '' or board[2,7] != '' or board[3,7] != '':
+            # If the whole board is empty
+            return False 
+        return True 
+        
+def casteling_right_possible(board, player):
+    # Also known as short castle
+    if player.white:
+        if board[4,0].symbol != 'k':
+            return False
+        if board[4,0].moved == True:
+            return False
+        if board[7,0].symbol != 'r':
+            return False
+        if board[7,0].moved == True:
+            return False 
+        if board[6,0] != '' or board[5,0] != '': 
+            # If the whole board is empty
+            return False 
+        return True 
+    if not player.white:
+        if board[4,7].symbol != 'k':
+            return False
+        if board[4,7].moved == True:
+            return False
+        if board[7,7].symbol != 'r':
+            return False
+        if board[7,7].moved == True:
+            return False 
+        if board[6,7] != '' or board[5,7] != '':
+            # If the whole board is empty
+            return False 
+        return True 
+            
+
 def name_column(col_num):
     replacement = {
         "a": 0,

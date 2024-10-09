@@ -127,3 +127,21 @@ def pawn_capture(board):
     board = place_pawns(board,7, 2, True)
     board = place_pawns(board,6, 3, False)
     return board
+
+def generate_castle_test(board):
+    # Place pawns
+    for i in range(0, 8):
+        board = place_pawns(board, i, 1, True)
+    
+    for y in range(0, 8):
+        board = place_pawns(board, y, 6, False)
+
+    board = place_rooks(board, 0, 0, True)
+    board = place_rooks(board, 7, 0, True)
+    board = place_rooks(board, 0, 7, False)
+    board = place_rooks(board, 7, 7, False)
+
+    board = place_kings(board, 4, 0, True)
+    board = place_kings(board, 4, 7, False)
+
+    return board

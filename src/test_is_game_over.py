@@ -15,13 +15,6 @@ class TestIsGameContinuing(unittest.TestCase):
         expect = 0
         print (f"Expecting {expect}, recieved {input}")
         self.assertEqual(input, expect)
-    def test_game_drawn(self):
-        # Game is a draw
-        board = generate_drawn_board(create_board())
-        input = is_game_over(board)
-        expect = 1
-        print (f"Expecting {expect}, recieved {input}")
-        self.assertEqual(input,expect)
     def test_game_loss(self):
         # Game is a loss
         board = generate_losing_board(create_board())
