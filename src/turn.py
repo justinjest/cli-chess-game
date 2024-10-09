@@ -4,15 +4,14 @@
 # We are not currently validating that moves are correct
 # We then reender the next board
 import re
+from board_logic import place_queens
 
 # TODO: Make sure you can only move pieces of the color of the current player's turn
 
 def turn(board, player):
     new_board = board
     move = move_validation(new_board, player)
-    # This should print a piece if it's a valid move
     if move != "O-O" and move != "O-O-O":
-        print ("Not castle")
         if board[move[0]].symbol == 'k' or board[move[0]].symbol == 'r':
             board[move[0]].moved = True
         new_board[move[1]] = new_board[move[0]]
@@ -52,6 +51,7 @@ def turn(board, player):
                 new_board[7,7] = ''
 
     # Return (new_board, game_over_flag)
+    new_board = pawn_promotion(board)
     return new_board
 
 def move_validation(board, player):
@@ -142,22 +142,6 @@ def get_black_moves(board):
         if square != "":
             if not square.white:
                 moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)]) 
-    return moves
-
-def get_white_checks(board):
-    moves = []
-    for square in board.values():
-        if square != "" and square.symbol != "k":
-            if square.white:
-                moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)])
-    return moves
-
-def get_black_checks(board):
-    moves = []
-    for square in board.values():
-        if square != "" and square.symbol != "k":
-            if not square.white:
-                moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)])
     return moves
 
 def input_validation():
@@ -271,3 +255,16 @@ def is_game_over(board):
                             elif square.is_move_valid(board) == [] and len(checked_black) == 1:
                                 return 1
     return 0
+
+def pawn_promotion(board):
+    new_board = board
+    for square in board.values():
+        if square != "":
+            if square.symbol == "p":
+                if square.white == True:
+                    if square.y == 7:
+                        new_board = place_queens(board, square.x, square.y, True)
+                if square.white == False:
+                    if square.y == 0:
+                        new_board = place_queens(board, square.x, square.y, False)
+    return new_board

@@ -1,5 +1,5 @@
 from pieces import *
-from render_board import draw_board
+
 
 # This is where the logic involving game state should live
 

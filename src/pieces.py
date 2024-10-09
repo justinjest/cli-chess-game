@@ -1,4 +1,4 @@
-from turn import get_black_checks, get_white_checks
+
 class Piece:
     # White is a boolean to represent white or black
     # White is True, black is False
@@ -318,3 +318,19 @@ class King(Piece):
             if i in valid_moves:
                 valid_moves.remove(i)
         return valid_moves
+
+def get_white_checks(board):
+    moves = []
+    for square in board.values():
+        if square != "" and square.symbol != "k":
+            if square.white:
+                moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)])
+    return moves
+
+def get_black_checks(board):
+    moves = []
+    for square in board.values():
+        if square != "" and square.symbol != "k":
+            if not square.white:
+                moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)])
+    return moves
