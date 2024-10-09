@@ -10,12 +10,46 @@ import re
 def turn(board, player):
     new_board = board
     move = move_validation(new_board, player)
+    print (move)
     # This should print a piece if it's a valid move
-    if board[move[0]].symbol == 'k' or board[move[0]].symbol == 'r':
-       board[move[0]].moved = True
-    new_board[move[1]] = new_board[move[0]]
-    new_board[move[0]] = ''
-    # Check here to determine if game is over with new_board
+    if move != "O-O" and move != "O-O-O":
+        if board[move[0]].symbol == 'k' or board[move[0]].symbol == 'r':
+            board[move[0]].moved = True
+            new_board[move[1]] = new_board[move[0]]
+            new_board[move[0]] = ''
+            # Check here to determine if game is over with new_board
+    elif move == "O-O-O":
+        if casteling_left_possible(board, player):
+            if player.white:
+                # White is casteling left
+                new_board[2,0] = board[4,0]
+                new_board[4,0] = ''
+                # Move king left two
+                new_board[3,0] = board[0,0]
+                new_board[0,0] = ''
+            if not player.white:
+                # Black is casteling left
+                new_board[2,7] = board[4,7]
+                new_board[4,7] = ''
+                # Move king left two
+                new_board[3,7] = board[0,7]
+                new_board[0,7] = ''
+    elif move == "O-O":
+        if casteling_right_possible(board, player):
+            if player.white:
+                # White is casteling left
+                new_board[6,0] = board[4,0]
+                new_board[4,0] = ''
+                # Move king left two
+                new_board[5,0] = board[7,0]
+                new_board[7,0] = ''
+            elif not player.white:
+                # Black is casteling left
+                new_board[6,7] = board[4,7]
+                new_board[4,7] = ''
+                # Move king left two
+                new_board[5,7] = board[7,7]
+                new_board[7,7] = ''
 
     # Return (new_board, game_over_flag)
     return new_board
@@ -24,6 +58,10 @@ def move_validation(board, player):
     move = ""
     while move == "":
         tmp = input_validation()
+        if casteling_left_possible(board, player) and tmp == "O-O-O":
+            return "O-O-O"
+        elif casteling_right_possible(board,player) and tmp == "O-O":
+            return "O-O"
         move = translate_move(board, tmp)
     # This calls the coords of the piece you are moving move[0] is the starting position move[1] is the ending position
     starting_pos = (move[0][0], move[0][1])
@@ -88,6 +126,8 @@ def input_validation():
     # TODO add pawn notation (e7) instead of (pe7)
 
     move_validation_regex = re.compile(r'[rqpnkb][a-h][1-8]')
+    if move == "O-O" or move == "O-O-O":
+        return move
     if not move_validation_regex.match(move):
         print("That isn't on the board, please try again")
         input_validation()
@@ -151,7 +191,6 @@ def casteling_right_possible(board, player):
             return False 
         return True 
             
-
 def name_column(col_num):
     replacement = {
         "a": 0,
@@ -169,6 +208,10 @@ def name_column(col_num):
 def translate_move(board, move):
     # takes a move in form Ra8 and converts it to form (0,0)(0,8)
     # Breaks if there are no available moves and the game is not over
+    if move == "O-O":
+        return "O-O"
+    if move == "O-O-O":
+        return "O-O-O"
     all_moves = get_all_moves(board)
     moves = []
     for piece in all_moves:
@@ -201,7 +244,9 @@ def translate_move(board, move):
     elif len(moves) == 0:
         print("No valid moves found")
         return ""
-    # If there is only one option, we just return the move
+    # If there is only one option, we just return the move unless it's a castle
+    # Casteling we will record the kings final location, even though it's not stored in the valid moves section
+    # And update the board
     else:
         return (moves[0][0], moves[0][1])
     
