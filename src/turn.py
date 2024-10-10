@@ -6,8 +6,6 @@
 import re
 from board_logic import place_queens
 
-# TODO: Make sure you can only move pieces of the color of the current player's turn
-
 def turn(board, player):
     new_board = board
     move = move_validation(new_board, player)
@@ -15,9 +13,8 @@ def turn(board, player):
         if board[move[0]].symbol == 'k' or board[move[0]].symbol == 'r':
             board[move[0]].moved = True
         new_board[move[1]] = board[move[0]]
-        print (move[1][0], move[1][1])
-        new_board[move[0]].x = move[1][0]
-        new_board[move[0]].y = move[1][1]
+        new_board[move[1]].x = move[1][0]
+        new_board[move[1]].y = move[1][1]
         new_board[move[0]] = ''
         # Check here to determine if game is over with new_board
     elif move == "O-O-O":
@@ -54,7 +51,6 @@ def turn(board, player):
                 new_board[7,7] = ''
 
     # Return (new_board, game_over_flag)
-    print (new_board)
     new_board = pawn_promotion(new_board)
     return new_board
 
@@ -66,7 +62,7 @@ def move_validation(board, player):
             return "O-O-O"
         elif casteling_right_possible(board,player) and tmp == "O-O":
             return "O-O"
-        move = translate_move(board, tmp)
+        move = translate_move(board, tmp, player)
     # This calls the coords of the piece you are moving move[0] is the starting position move[1] is the ending position
     starting_pos = (move[0][0], move[0][1])
     ending_pos = (move[1][0], move[1][1])
@@ -81,12 +77,15 @@ def move_validation(board, player):
     else: 
         return move_validation(board, player)
 
-def translate_move(board, move):
+def translate_move(board, move, player):
     # takes a move in form Ra8 and converts it to form (0,0)(0,8)
     # Breaks if there are no available moves and the game is not over
-    all_moves = get_all_moves(board)
+    if player.white:
+        possible_moves = get_white_moves(board)
+    elif not player.white:
+        possible_moves = get_black_moves(board)
     moves = []
-    for piece in all_moves:
+    for piece in possible_moves:
         if piece[0] == move[0].lower():
             second_letter = name_column(move[1])
             third_letter = int(move[2]) - 1
@@ -96,7 +95,7 @@ def translate_move(board, move):
     # If two similiar pieces can move to the same square, we need to clarify which one we are looking at
     if len(moves) > 1:
         validated = ""
-        print(board)
+        print(moves)
         print("There are multiple pieces that could move there. Please provide the coordinates you want to move from")
         while validated == "":
             coords = input()
@@ -111,7 +110,6 @@ def translate_move(board, move):
                 for i in moves:
                     print(i[0], end = '')
                 print ()
-        # TODO: Check to make sure the originating piece is actually at this location
         return(validated, moves[0][1])
     elif len(moves) == 0:
         print("No valid moves found")
@@ -165,7 +163,7 @@ def input_validation():
 def casteling_left_possible(board, player):
     # Also known as long castle
     if player.white:
-        if board[4,0] == '':
+        if board[4,0] == '' or board[0,0] == '':
             return False
         # King moved somewhere, don't need to worry about it
         if board[4,0].symbol != 'k':
@@ -181,7 +179,7 @@ def casteling_left_possible(board, player):
             return False 
         return True 
     if not player.white:
-        if board[4,7] == '':
+        if board[4,7] == '' or board[0,7]=='':
             return False
         # King moved somewhere, don't need to worry about it
         if board[4,7].symbol != 'k':
@@ -200,7 +198,7 @@ def casteling_left_possible(board, player):
 def casteling_right_possible(board, player):
     # Also known as short castle
     if player.white:
-        if board[4,0] == '':
+        if board[4,0] == '' or board [7,0] == '':
             return False
         # King moved somewhere, don't need to worry about it
         if board[4,0].symbol != 'k':
@@ -216,7 +214,7 @@ def casteling_right_possible(board, player):
             return False 
         return True 
     if not player.white:
-        if board[4,7] == '':
+        if board[4,7] == '' or board[7,7] == '':
             return False
         # King moved somewhere, don't need to worry about it
         if board[4,7].symbol != 'k':
@@ -278,14 +276,11 @@ def pawn_promotion(board):
         if square != "":
             if square.symbol == "p":
                 if square.white == True:
-                    print (square.x, square.y)
                     if square.y == 7:
-                        print ("On the last rank")
                         new_board = place_queens(board, square.x, square.y, True)
                         print(new_board)
                 if square.white == False:
                     if square.y == 0:
-                        print ("on the last rank")
                         new_board = place_queens(board, square.x, square.y, False)
                         print(new_board)
     return new_board

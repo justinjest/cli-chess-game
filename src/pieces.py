@@ -13,7 +13,6 @@ class Pawn(Piece):
     # returns a list of valid moves
     def is_move_valid(self, board): 
         # TODO: add en passant (HOW)
-        # TODO: add promotion
         valid_moves = []
         if self.white == True:
             if self.y == 1:
@@ -42,15 +41,15 @@ class Pawn(Piece):
             else:
                 if board[self.x, self.y - 1] == '':
                     valid_moves.append((self.x, self.y - 1))
+            # TODO: For some reason black pawns dont' seem to be able to capture at all
             # Capture logic for black   
             if self.y - 1 in range(0,8):
-                if self.x - 1 in range (0,8):
-                    if board[self.x - 1, self.y - 1] != '':
-                        valid_moves.append((self.x + 1, self.y - 1))
                 if self.x + 1 in range (0,8):
                     if board[self.x + 1, self.y - 1] != '':
+                        valid_moves.append((self.x + 1, self.y - 1))
+                if self.x - 1 in range (0,8):
+                    if board[self.x - 1, self.y - 1] != '':
                         valid_moves.append((self.x - 1, self.y - 1))
-
 
         return (valid_moves)
 
@@ -297,7 +296,6 @@ class King(Piece):
         self.symbol = "k"
         self.moved = False
     def is_move_valid(self, board):
-        # TODO: add castling O-O and O-O-O
         valid_moves = []
         for i in range (-1,2):
             for j in range (-1,2):
