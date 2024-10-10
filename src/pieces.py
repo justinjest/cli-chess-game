@@ -41,7 +41,6 @@ class Pawn(Piece):
             else:
                 if board[self.x, self.y - 1] == '':
                     valid_moves.append((self.x, self.y - 1))
-            # TODO: For some reason black pawns dont' seem to be able to capture at all
             # Capture logic for black   
             if self.y - 1 in range(0,8):
                 if self.x + 1 in range (0,8):
@@ -307,13 +306,15 @@ class King(Piece):
                     else:
                         if board[(check_x, check_y)].white != self.white:
                             valid_moves.append((check_x, check_y))
+        # TODO: None of this actually removes the move...
         if self.white:
-            checks = get_white_checks(board)
-        if not self.white:
             checks = get_black_checks(board)
-        for i in checks:
-            if i in valid_moves:
-                valid_moves.remove(i)
+        if not self.white:
+            checks = get_white_checks(board)
+        for piece in checks:
+            for move in piece[1]:
+                if move in valid_moves:
+                    valid_moves.remove(move)
         return valid_moves
 
 def get_white_checks(board):

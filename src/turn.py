@@ -248,6 +248,8 @@ def name_column(col_num):
 # interp. 0 game is not over
 #         1 game is a draw
 #         2 current player is winner
+# TODO: Provides game over the turn after a king is in check
+ 
 def is_game_over(board):
     checked_black = get_black_moves(board)
     checked_white = get_white_moves(board)
