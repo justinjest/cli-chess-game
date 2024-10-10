@@ -95,7 +95,6 @@ def translate_move(board, move, player):
     # If two similiar pieces can move to the same square, we need to clarify which one we are looking at
     if len(moves) > 1:
         validated = ""
-        print(moves)
         print("There are multiple pieces that could move there. Please provide the coordinates you want to move from")
         while validated == "":
             coords = input()
@@ -280,9 +279,7 @@ def pawn_promotion(board):
                 if square.white == True:
                     if square.y == 7:
                         new_board = place_queens(board, square.x, square.y, True)
-                        print(new_board)
                 if square.white == False:
                     if square.y == 0:
                         new_board = place_queens(board, square.x, square.y, False)
-                        print(new_board)
     return new_board

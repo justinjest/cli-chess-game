@@ -52,7 +52,6 @@ class Pawn(Piece):
 
         return (valid_moves)
 
-
 class Rook(Piece):
     def __init__(self, x_y_pair, white):
         super().__init__(white, x_y_pair[0], x_y_pair[1]) 
@@ -306,12 +305,16 @@ class King(Piece):
                     else:
                         if board[(check_x, check_y)].white != self.white:
                             valid_moves.append((check_x, check_y))
-        # TODO: None of this actually removes the move...
+        # TODO: None of this actually removes the move if it's a pawn
+        # This is because the pawn only registers the check if the square has something in it
+
         if self.white:
             checks = get_black_checks(board)
         if not self.white:
             checks = get_white_checks(board)
         for piece in checks:
+            if len(piece) == 0:
+                continue
             for move in piece[1]:
                 if move in valid_moves:
                     valid_moves.remove(move)
@@ -322,6 +325,12 @@ def get_white_checks(board):
     for square in board.values():
         if square != "" and square.symbol != "k":
             if square.white:
+                if square.symbol == "p":
+                    if square.y + 1 in range(0,8):
+                        if square.x + 1 in range (0,8):
+                            moves.append([square.symbol, [(square.x + 1, square.y + 1)], (square.x, square.y)])
+                        if square.x - 1 in range (0,8):
+                            moves.append([square.symbol, [(square.x - 1, square.y + 1)], (square.x, square.y)])
                 moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)])
     return moves
 
@@ -330,5 +339,11 @@ def get_black_checks(board):
     for square in board.values():
         if square != "" and square.symbol != "k":
             if not square.white:
+                if square.symbol == "p":
+                    if square.y - 1 in range(0,8):
+                        if square.x + 1 in range (0,8):
+                            moves.append([square.symbol, [(square.x + 1, square.y - 1)], (square.x, square.y)])
+                        if square.x - 1 in range (0,8):
+                            moves.append([square.symbol, [(square.x - 1, square.y - 1)], (square.x, square.y)])
                 moves.append([square.symbol, square.is_move_valid(board), (square.x, square.y)])
     return moves
