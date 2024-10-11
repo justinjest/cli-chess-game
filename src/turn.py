@@ -250,25 +250,25 @@ def name_column(col_num):
 # TODO: Provides game over the turn after a king is in check
  
 def is_game_over(board):
-    checked_black = get_black_moves(board)
-    checked_white = get_white_moves(board)
     for square in board.values():
             if square != "":
                 if square.symbol == "k":
+                    escape_moves = square.is_move_valid(board)
                     k_pos = (square.x, square.y)
                     color = square.white
                     if color:
-                        for possible in checked_black:
-                            if k_pos in possible[1]:
-                                return 2
-                            elif square.is_move_valid(board) == [] and len(checked_white) == 1:
-                                return 1
-                    if not color:
-                        for possible in checked_white:
-                            if k_pos in possible[1]:
-                                return 2
-                            elif square.is_move_valid(board) == [] and len(checked_black) == 1:
-                                return 1
+                        checks = get_black_moves(board)
+                    elif not color:
+                        checks = get_white_moves(board)
+                    print(escape_moves)
+                    for possible in checks:
+                        # If the king is in check, currently reading as checkmate
+                        if k_pos in possible[1]:
+                            return 2
+                        # This currently does not work
+                        # Should be if no possible and not in check moves return 1
+                        elif square.is_move_valid(board) == [] and len(checks) == 1:
+                            return 1
     return 0
 
 def pawn_promotion(board):
