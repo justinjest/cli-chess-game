@@ -101,10 +101,11 @@ def generate_board_no_pawns(board):
     return board
 
 def generate_drawn_board(board):
-    board = place_kings(board, 4, 7, False)
+    board = place_kings(board, 4, 7, True)
 
-    board = place_pawns(board, 4, 6, True)
-    board = place_queens(board, 0, 6, True)
+    board = place_pawns(board, 4, 6, False)
+    board = place_queens(board, 0, 6, False)
+    board = place_rooks(board, 7, 6, False)
     return board
 
 def generate_losing_board(board):

@@ -305,8 +305,9 @@ class King(Piece):
                     else:
                         if board[(check_x, check_y)].white != self.white:
                             valid_moves.append((check_x, check_y))
-        # TODO: None of this actually removes the move if it's a pawn
-        # This is because the pawn only registers the check if the square has something in it
+        # TODO: Currently can capture a piece, even if doing so would put you into check
+        # This is because when you run the is_move_valid we are ending the search once we find a same color piece.
+        
 
         if self.white:
             checks = get_black_checks(board)
