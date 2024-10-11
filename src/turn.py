@@ -261,13 +261,15 @@ def is_game_over(board):
                     elif not color:
                         checks = get_white_moves(board)
                     print(escape_moves)
+                    # Currently checks to determine ONLY if king can move
+                    # Blocking with a rook ie is not required
                     for possible in checks:
-                        # If the king is in check, currently reading as checkmate
-                        if k_pos in possible[1]:
+                        # If the king is in check and cannot himself move, currently reading as checkmate
+                        if k_pos in possible[1] and escape_moves == []:
                             return 2
                         # This currently does not work
                         # Should be if no possible and not in check moves return 1
-                        elif square.is_move_valid(board) == [] and len(checks) == 1:
+                        elif escape_moves == [] and len(checks) == 1:
                             return 1
     return 0
 
